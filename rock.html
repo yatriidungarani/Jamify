@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Playlist - Music World</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #222;
+            color: #fff;
+        }
+        header {
+            background-color: #444;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .playlist {
+            padding: 20px;
+        }
+        .song {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+        .song img {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+        .song-info {
+            flex-grow: 1;
+        }
+        .song-info h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .song-info p {
+            margin: 5px 0 0;
+            color: #bbb;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .footer-song-info {
+            display: flex;
+            align-items: center;
+        }
+        .footer-song-info img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+        .footer-song-info div {
+            text-align: left;
+        }
+        .footer-song-controls {
+            display: flex;
+            align-items: center;
+        }
+        .footer-song-controls audio {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Rock Playlist</h1>
+    </header>
+    <section class="playlist">
+        <div class="song" onclick="playSong('i wanna be your slave', 'Maneskin', 'songs/i wanna be your slave.mp3', 'images/iwannabeyourslave.png')">
+            <img src="images/iwannabeyourslave.png" alt="Rock">
+            <div class="song-info">
+                <h3>i wanna be your slave</h3>
+                <p>Maneskin</p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('agora hills', 'doja cat', 'songs/agora hills.mp3', 'images/agora hills.jpg')">
+            <img src="images/agora hills.jpg" alt="Rock">
+            <div class="song-info">
+                <h3>agora hills</h3>
+                <p>doja cat </p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('bad guy', 'billie Eilish', 'songs/bad guy.mp3', 'images/bad guys.jpeg')">
+            <img src="images/bad guys.jpeg" alt="Rock">
+            <div class="song-info">
+                <h3>bad guy</h3>
+                <p>billie Eilish</p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('paper rings', 'taylor swift', 'songs/paper rings.mp3', 'images/lover.jpeg')">
+            <img src="images/lover.jpeg" alt="Rock">
+            <div class="song-info">
+                <h3>paper rings</h3>
+                <p>taylor swift</p>
+            </div>
+        </div>
+        
+        <div class="song" onclick="playSong('please please please', 'Sabrina Carpenter', 'songs/please.mp3', 'images/please.jpeg')">
+            <img src="images/please.jpeg" alt="Rock">
+            <div class="song-info">
+                <h3>please please please</h3>
+                <p>Sabrina Carpenter</p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('treat you better', 'Shawn Mendes', 'songs/treat you better.mp3', 'images/treat you better.jpeg')">
+            <img src="images/treat you better.jpeg" alt="Rock">
+            <div class="song-info">
+                <h3>treat you better</h3>
+                <p>Shawn Mendes</p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('rewrite the stars', 'james Arthur', 'songs/rewrite the stars.mp3', 'images/rewrite the stars.jpeg')">
+            <img src="images/rewrite the stars.jpeg" alt="Rock">
+            <div class="song-info">
+                <h3>rewrite the stars</thead></h3>
+                <p>james Arthur</p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('midnight', 'taylor swift', 'songs/midnight.mp3', 'images/lover.jpeg')">
+            <img src="images/lover.jpeg" alt="Rock">
+            <div class="song-info">
+                <h3>midnight</h3>
+                <p>taylor swift</p>
+            </div>
+        </div>
+        <div class="song" onclick="playSong('gasolina', 'daddy yankee', 'songs/gasolina.mp3', 'images/gasolina.jpg')">
+            <img src="images/gasolina.jpg" alt="Rock">
+            <div class="song-info">
+                <h3>gasolina</h3>
+                <p>daddy yankee</p>
+            </div>
+        </div>
+        <br><br><br><br>
+    </section>
+    <footer>
+        <div class="footer-song-info" id="footerSongInfo">
+            <img src="" alt="Song Image" id="footerSongImage">
+            <div>
+                <p id="footerSongTitle">Select a song to play</p>
+                <p id="footerSongArtist"></p>
+            </div>
+        </div>
+        <div class="footer-song-controls">
+            <audio controls id="footerAudio">
+                <source id="footerAudioSource" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </footer>
+
+    <script>
+        function playSong(title, artist, url, image) {
+            document.getElementById('footerSongTitle').textContent = title;
+            document.getElementById('footerSongArtist').textContent = artist;
+            document.getElementById('footerAudioSource').src = url;
+            document.getElementById('footerSongImage').src = image;
+            document.getElementById('footerAudio').load();
+            document.getElementById('footerAudio').play();
+        }
+    </script>
+</body>
+</html>

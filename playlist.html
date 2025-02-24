@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Playlist</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Music Playlist</h1>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#playlist">Playlist</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+        <a href="javascript:void(0);" onclick="toggleChat()">Messages</a>
+    </nav>
+    <section id="playlist">
+        <h2>Happy Songs</h2>
+        <ul>
+            <li>
+                Happy Song - Happy Artist
+                <button class="share-button" onclick="shareSong({title: 'Happy Song', artist: 'Happy Artist', url: 'happy_song.mp3', image: 'happy.jpg', category: 'happy'})">Share</button>
+            </li>
+        </ul>
+        <h2>Love Songs</h2>
+        <ul>
+            <li>
+                Love Song - Love Artist
+                <button class="share-button" onclick="shareSong({title: 'Love Song', artist: 'Love Artist', url: 'love_song.mp3', image: 'love.jpg', category: 'love'})">Share</button>
+            </li>
+        </ul>
+        <!-- Repeat for other categories... -->
+    </section>
+    <footer>
+        <div class="footer-song-info" id="footerSongInfo">
+            <img src="" alt="Song Image" id="footerSongImage">
+            <div>
+                <p id="footerSongTitle">Select a song to play</p>
+                <p id="footerSongArtist"></p>
+            </div>
+        </div>
+        <div class="footer-song-controls">
+            <audio controls id="footerAudio">
+                <source id="footerAudioSource" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </footer>
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header" onclick="toggleChat()">
+            <h3>Messages</h3>
+            <span id="chatToggle">-</span>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script>
+        const footerSongInfo = document.getElementById('footerSongInfo');
+        const footerSongTitle = document.getElementById('footerSongTitle');
+        const footerSongArtist = document.getElementById('footerSongArtist');
+        const footerAudio = document.getElementById('footerAudio');
+        const footerAudioSource = document.getElementById('footerAudioSource');
+        const footerSongImage = document.getElementById('footerSongImage');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        function playSong(song) {
+            footerSongTitle.textContent = song.title;
+            footerSongArtist.textContent = song.artist;
+            footerAudioSource.src = song.url;
+            footerAudio.load();
+            footerAudio.play();
+            footerSongImage.src = song.image;
+            footerSongInfo.style.display = 'flex';
+        }
+
+        function toggleChat() {
+            const isChatVisible = chatContainer.style.display === 'flex';
+            chatContainer.style.display = isChatVisible ? 'none' : 'flex';
+            document.getElementById('chatToggle').textContent = isChatVisible ? '+' : '-';
+        }
+
+        function sendMessage() {
+            const messageText = chatInput.value.trim();
+            if (messageText) {
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = messageText;
+                chatMessages.appendChild(messageDiv);
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        function shareSong(song) {
+            const messageText = `Check out this song: ${song.title} by ${song.artist}`;
+            chatInput.value = messageText;
+            toggleChat();
+        }
+    </script>
+</body>
+</html>

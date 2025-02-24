@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Music</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181818;
+            color: white;
+        }
+        header {
+            background-color: rgb(82, 76, 76);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #696e6b;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+        }
+        .artist-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .artist-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .artist-item:hover {
+            background-color: #333;
+        }
+
+        .artist-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 70%;
+        }
+
+        .artist-info h2 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        
+        .playlists {
+            display: none;
+            padding-left: 120px;
+            margin-top: 10px;
+        }
+        .playlist-item {
+            background-color: #383838;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-song-info img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+        }
+
+        .footer-song-info img.show {
+            opacity: 1;
+            width: 100px;
+            height: 100px;
+        }
+
+        .footer-song-info {
+            display: flex;
+            align-items: center;
+            background-color: #000;
+            padding: 10px;
+            transition: padding 0.5s ease-in-out;
+        }
+        .footer-song-info img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+        }
+        .footer-song-info.enlarged {
+            padding: 30px; /* Enlarged padding when the song plays */
+        }
+        .footer-song-controls {
+            margin-left: auto;
+        }
+        .footer-song-info{
+            transition: all 0.5s ease;
+        }
+        .footer-song-info img {
+            transition: all 0.5s ease;
+        }
+        .footer-song-info.enlarged img {
+            width: 250px;
+            height: 250px;
+        }
+        body.playing {
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Discover Music</h1>
+    </header>
+    
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    
+    <div class="artist-section">
+        <!-- Artist 1 -->
+        <div class="artist-item" onclick="showPlaylists('artist1')">
+            <img src="images/the weekend.jpeg" alt="The weekend">
+            <div class="artist-info">
+                <h2>The weekend</h2>
+            </div>
+        </div>
+        
+        <div class="playlists" id="artist1-playlists">
+            <div class="playlist-item" onclick="playSong('songs/Blinding Lights.mp3', 'Blinding Lights', 'The weekend', 'images/Blinding Lights.jpeg')">
+                Blinding Lights
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Starboy.mp3', 'Starboy', 'The weekend', 'images/Starboy.jpeg')">
+                Starboy
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Die For You.mp3', 'Die For You', 'The weekend', 'images/Die For You.jpeg')">
+                Die For You
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/One Of The Girls.mp3', 'One Of The Girls', 'The weekend', 'images/One Of The Girls.jpeg')">
+                One Of The Girls
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/often.mp3', 'often', 'The weekend', 'images/often.jpeg')">
+                often
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Timeless.mp3', 'Timeless', 'The weekend', 'images/Timeless.jpeg')">
+                Timeless
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Party Monster.mp3', 'Party Monster', 'The weekend', 'images/Starboy.jpeg')">
+                Party Monster
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Reminder.mp3', 'Reminder', 'The weekend', 'images/Die For You.jpeg')">
+                Reminder
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Save The Tears.mp3', 'Save The Tears', 'The weekend', 'images/Blinding Lights.jpeg')">
+                Save The Tears
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Creepin.mp3', 'Creepin', 'The weekend', 'images/Creepin.jpeg')">
+                Creepin
+            </div>
+        </div>
+
+        <!-- Artist 2 -->
+        <div class="artist-item" onclick="showPlaylists('artist2')">
+            <img src="images//kanye west.jpeg" alt="Kanye west">
+            <div>
+                <h2>Kanye west</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist2-playlists">
+            <div class="playlist-item" onclick="playSong('songs/heartless.mp3', 'Heartless', 'Kanye west', 'images/heartless.jpeg')">
+                Heartless
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/carnival.mp3', 'Carnival', 'Kanye west', 'images/burn.jpeg')">
+                Carnival
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/river.mp3', 'River', 'Kanye west', 'images/burn.jpeg')">
+                River
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/slide.mp3', 'Slide', 'Kanye west', 'images/burn.jpeg')">
+                Slide
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/FSMH.mp3', 'Father Strech My Hands', 'Kanye west', 'images/FSMH.jpeg')">
+                Father Strech My Hands
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/runway.mp3', 'Runway', 'Kanye west', 'images/runway.jpeg')">
+                Runway
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/gold digger.mp3', 'Gold digger', 'Kanye west', 'images/gold digger.jpeg')">
+                Gold digger
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/field trip.mp3', 'Field trip', 'Kanye west', 'images/burn.jpeg')">
+                Field trip
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/burn.mp3', 'Burn', 'Kanye west', 'images/burn.jpeg')">
+                Burn
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/We dont care.mp3', 'We dont care', 'Kanye west', 'images/we dont care.jpeg')">
+                We dont care
+            </div>
+        </div>
+
+         <!-- Artist 3 -->
+        <div class="artist-item" onclick="showPlaylists('artist3')">
+            <img src="images//metro boomin.jpeg" alt="Metro Boomin">
+            <div>
+                <h2>Metro Boomin</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist3-playlists">
+            <div class="playlist-item" onclick="playSong('songs/trance.mp3', 'Trance', 'Metro Boomin', 'images/Creepin.jpeg')">
+                Trance 
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/superhero.mp3', 'Superhero', 'Metro Boomin', 'images/Creepin.jpeg')">
+                Superhero
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/cindrella.mp3', 'Cindrella', 'Metro Boomin', 'images/cindrella.jpeg')">
+                Cindrella
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/young metro.mp3', 'Young Metro', 'Metro Boomin', 'images/young metro.jpeg')">
+                Young Metro
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/type shit.mp3', 'Type shit', 'Metro Boomin', 'images/cindrella.jpeg')">
+                Type shit
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/we dont trust you.mp3', 'We dont trust you', 'Metro Boomin', 'images/cindrella.jpeg')">
+                We dont trust you
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/we still dont trust you.mp3', 'We still dont trust you', 'Metro Boomin', 'images/young metro.jpeg')">
+                We still dont trust you
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/space cadet.mp3', 'Space cadet', 'Metro Boomin', 'images/space cadet.jpeg')">
+                Space cadet
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/umbrella.mp3', 'Umbrella', 'Metro Boomin', 'images/Creepin.jpeg')">
+                Umbrella
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/too many nights.mp3', 'Too many nights', 'Metro Boomin', 'images/Creepin.jpeg')">
+                Too many nights
+            </div>
+        </div>
+
+        <!-- Artist 4 -->
+        <div class="artist-item" onclick="showPlaylists('artist4')">
+            <img src="images//travis scott.jpg" alt="Travis scott">
+            <div>
+                <h2>Travis scott</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist4-playlists">
+            <div class="playlist-item" onclick="playSong('songs/my eyes.mp3', 'My eyes', 'Travis scott', 'images/my eyes.jpeg')">
+                My eyes
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/hyaena.mp3', 'HYAENA', 'Travis scott', 'images/my eyes.jpeg')">
+                HYAENA
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/thank god.mp3', 'THANK GOD', 'Travis scott', 'images/my eyes.jpeg')">
+                THANK GOD
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/goosebumps.mp3', 'Goosebumps', 'Travis scott', 'images/goosebumps.jpeg')">
+                Goosebumps
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/sdp interlude.mp3', 'sdp interlude', 'Travis scott', 'images/goosebumps.jpeg')">
+                sdp interlude
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/highest in the room.mp3', 'Highest in the room', 'Travis scott', 'images/highest in the room.jpeg')">
+                Highest in the room
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/fein.mp3', 'FEIN', 'Travis scott', 'images/my eyes.jpeg')">
+                FEIN
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/i know.mp3', 'I KNOW', 'Travis scott', 'images/my eyes.jpeg')">
+                I KNOW
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/sicko mode.mp3', 'SICKO MODE', 'Travis scott', 'images/sicko mode.jpeg')">
+                SICKO MODE
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/butterfly effect.mp3', 'BUTTERFLY EFFECT', 'Travis scott', 'images/sicko mode.jpeg')">
+                BUTTERFLY EFFECT
+            </div>
+        </div>
+
+        <!-- Artist 5 -->
+        <div class="artist-item" onclick="showPlaylists('artist5')">
+            <img src="images//lana del ray.jpeg" alt="Lana Del Ray">
+            <div>
+                <h2>Lana Del Ray</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist5-playlists">
+            <div class="playlist-item" onclick="playSong('songs/Chemtrails Over The Country Club.mp3', 'Chemtrails Over The Country Club', 'Lana Del Ray', 'images/Chemtrails Over The Country Club.jpg')">
+                Chemtrails Over The Country Club
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Diet Mountain Dew.mp3', 'Diet Mountain Dew', 'Lana Del Ray', 'images/Diet Mountain Dew.jpg')">
+                Diet Mountain Dew
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/cinnamon girl.mp3', 'cinnamon girl', 'Lana Del Ray', 'images/cinnamon girl.jpg')">
+                cinnamon girl
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/tough.mp3', 'Tough', 'Lana Del Ray', 'images/tough.jpeg')">
+                Tough
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/young and beautiful.mp3', 'Young and beautiful', 'Lana Del Ray', 'images/young and beautiful.jpeg')">
+                Young and beautiful
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/west coast.mp3', 'West coast', 'Lana Del Ray', 'images/west coast.jpeg')">
+                West coast
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/white mustang.mp3', 'White mustang', 'Lana Del Ray', 'images/white mustang.jpeg')">
+                White mustang
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/video games.mp3', 'Video games', 'Lana Del Ray', 'images/video games.jpeg')">
+                Video games
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/say yes to heaven.mp3', 'Say yes to heaven', 'Lana Del Ray', 'images/say yes to heaven.jpeg')">
+                Say yes to heaven
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/brooklyn baby.mp3', 'Brooklyn baby', 'Lana Del Ray', 'images/brooklyn baby.jpeg')">
+                Brooklyn baby
+            </div>
+        </div>
+
+        <!-- Artist 6 -->
+        <div class="artist-item" onclick="showPlaylists('artist6')">
+            <img src="images//jvke.jpeg" alt="JVKE">
+            <div>
+                <h2>JVKE</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist6-playlists">
+            <div class="playlist-item" onclick="playSong('songs/golden hour.mp3', 'Golden hour', 'JVKE', 'images/golden hour.jpeg')">
+                Golden hour
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/this is what forever feels like.mp3', 'This is what forever feels like', 'JVKE', 'images/this is what forever feels like.jpeg')">
+                This is what forever feels like
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/this is what winter feels like.mp3', 'This is what winter feels like', 'JVKE', 'images/this is what winter feels like.jpeg')">
+                This is what winter feels like
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/moon and back.mp3', 'Moon and back', 'JVKE', 'images/moon and back.jpeg')">
+                Moon and back
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/shine.mp3', 'Shine', 'JVKE', 'images/shine.jpeg')">
+                Shine
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/dandelion.mp3', 'Dandelion', 'JVKE', 'images/dandelion.jpeg')">
+                Dandelion
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/home.mp3', 'Home', 'JVKE', 'images/home.jpeg')">
+                Home
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/catch me.mp3', 'Catch me', 'JVKE', 'images/catch me.jpeg')">
+                Catch me
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/mi amor.mp3', 'Mi amor', 'JVKE', 'images/mi amor.jpeg')">
+                Mi Amor
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/this is what heartbreak feels like.mp3', 'This is what heartbreak feels like', 'JVKE', 'images/this is what heartbreak feels like.jpeg')">
+                This is what heartbreak feels like
+            </div>
+        </div>
+
+        <!-- Artist 7 -->
+        <div class="artist-item" onclick="showPlaylists('artist7')">
+            <img src="images//billie eilish.jpeg" alt="Billie Eilish">
+            <div>
+                <h2>Billie Eilish</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist7-playlists">
+            <div class="playlist-item" onclick="playSong('songs/bad guy.mp3', 'Bad guy', 'Billie Eilish', 'images/bad guy.jpeg')">
+                Bad guy
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/lovely.mp3', 'lovely', 'Billie Eilish', 'images/lovely.jpeg')">
+                lovely
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Happier Than Ever.mp3', 'Happier Than Ever', 'Billie Eilish', 'images/Happier Than Ever.jpeg')">
+                Happier Than Ever
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/idontwannabeyouanymore.mp3', 'idontwannabeyouanymore', 'Billie Eilish', 'images/idontwannabeyouanymore.jpeg')">
+                idontwannabeyouanymore
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/my strange addiction.mp3', 'My strange addiction', 'Billie Eilish', 'images/bad guy.jpeg')">
+                My strange addiction
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/hostage.mp3', 'Hostage', 'Billie Eilish', 'images/idontwannabeyouanymore.jpeg')">
+                Hostage
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/no time to die.mp3', 'No time to die', 'Billie Eilish', 'images/no time to die.jpeg')">
+                No time to die
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/blue.mp3', 'Blue', 'Billie Eilish', 'images/blue.jpeg')">
+                Blue
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/not my responsibility.mp3', 'Not my responsibility', 'Billie Eilish', 'images/not my responsibility.jpeg')">
+                Not my responsibility
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/my boy.mp3', 'My boy', 'Billie Eilish', 'images/idontwannabeyouanymore.jpeg')">
+                My boy
+            </div>
+        </div>
+
+        <!-- Artist 8-->
+        <div class="artist-item" onclick="showPlaylists('artist8')">
+            <img src="images//sabrina carpenter.jpeg" alt="Sabrina Carpenter">
+            <div>
+                <h2>Sabrina Carpenter</h2>
+            </div>
+        </div>
+        <div class="playlists" id="artist8-playlists">
+            <div class="playlist-item" onclick="playSong('Espresso.mp3', 'Espresso', 'Sabrina Carpenter', 'images/Espresso.jpeg')">
+                Espresso
+            </div>
+            <div class="playlist-item" onclick="playSong('paris.mp3', 'paris', 'Sabrina Carpenter', 'images/paris.jpeg')">
+                paris
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/please.mp3', 'Please Please Please', 'Sabrina Carpenter', 'images/please.jpeg')">
+                Please Please Please
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/nonsense.mp3', 'Nonsense', 'Sabrina Carpenter', 'images/nonsense.jpeg')">
+                Nonsense
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/smoke and fire.mp3', 'Smoke and fire', 'Sabrina Carpenter', 'images/smoke and fire.jpeg')">
+                Smoke and fire
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/seamless.mp3', 'Seamless', 'Sabrina Carpenter', 'images/seamless.jpeg')">
+                Seamless
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/skin.mp3', 'Skin', 'Sabrina Carpenter', 'images/skin.jpeg')">
+                Skin
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/why.mp3', 'Why', 'Sabrina Carpenter', 'images/why.jpeg')">
+                Why
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/the middle of starting over.mp3', 'The middle of starting over', 'Sabrina Carpenter', 'images/the middle of starting over.jpeg')">
+                The middle of starting over
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/taste.mp3', 'Taste', 'Sabrina Carpenter', 'images/taste.jpeg')">
+                Taste
+            </div>
+        </div>
+
+        <div class="artist-item" onclick="showPlaylists('artist9')">
+            <img src="images//prateek kuhad.jpeg" alt="Prateek Kuhad">
+            <div class="artist-info">
+                <h2>Prateek Kuhad</h2>
+            </div>
+        </div>
+        
+        <div class="playlists" id="artist9-playlists">
+            <div class="playlist-item" onclick="playSong('songs/co2.mp3', 'Co2', 'Prateek Kuhad', 'images/co2.jpeg')">
+                Co2
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/kho gaye hum kaha.mp3', 'Kho gaye hum kaha', 'Prateek Kuhad', 'images/kho gaye hum kaha.jpeg')">
+                Kho gaye hum kaha
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/Kasoor.mp3', 'Kasoor', 'Prateek Kuhad', 'images/Kasoor.jpeg')">
+                Kasoor
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/cold.mp3', 'cold/mess', 'Prateek Kuhad', 'images/cold.jpeg')">
+                cold/mess
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/all i need.mp3', 'All i need', 'Prateek Kuhad', 'images/co2.jpeg')">
+                All i need
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/heartbroken.mp3', 'Heartbroken', 'Prateek Kuhad', 'images/co2.jpeg')">
+                Heartbroken
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/mulaqat.mp3', 'Mulaqat', 'Prateek Kuhad', 'images/mulaqat.jpeg')">
+                Mulaqat
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/i m someone new.mp3', 'i m someone new', 'Prateek Kuhad', 'images/i m someone new.jpeg')">
+                I m someone new
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/tune kaha.mp3', 'Tune kaha', 'Prateek Kuhad', 'images/tune kaha.jpeg')">
+                Tune kaha
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/kadam.mp3', 'Kadam', 'Prateek Kuhad', 'images/kadam.jpeg')">
+                Kadam
+            </div>
+        </div>
+
+        <div class="artist-item" onclick="showPlaylists('artist10')">
+            <img src="images//anuv jain.jpeg" alt="Anuv jain">
+            <div class="artist-info">
+                <h2>Anuv jain</h2>
+            </div>
+        </div>
+        
+        <div class="playlists" id="artist10-playlists">
+            <div class="playlist-item" onclick="playSong('songs/gul.mp3', 'Gul', 'Anuv jain', 'images/gul.jpeg')">
+                Gul
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/husn.mp3', 'Husn', 'Anuv jain', 'images/husn.jpeg')">
+                Husn
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/alag asamaan.mp3', 'Alag asamaan', 'Anuv jain', 'images/alag asamaan.jpeg')">
+                Alag asamaan
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/baarishein.mp3', 'Baarishein', 'Anuv jain', 'images/baarishein.jpeg')">
+                Baarishein
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/jo tum mere ho.mp3', 'Jo tum mere ho', 'Anuv jain', 'images/jo tum mere ho.jpeg')">
+                Jo tum mere ho
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/mazaak.mp3', 'Mazaak', 'Anuv jain', 'images/mazaak.jpeg')">
+                Mazaak
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/maula.mp3', 'Maula', 'Anuv jain', 'images/maula.jpeg')">
+                Maula
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/meri baaton mein tu.mp3', 'Meri baaton mein tu', 'Anuv jain', 'images/meri baaton mein tu.jpeg')">
+                Meri baaton mein tu
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/waqt ki baatein.mp3', 'Waqt ki baatein', 'Anuv jain', 'images/waqt ki baatein.jpeg')">
+                Waqt ki baatein
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/tu mane bhagwan.mp3', 'Tu mane bhagwan', 'Anuv jain', 'images/tu mane bhagwan.jpeg')">
+                Tu mane bhagwan
+            </div>
+        </div>
+
+        <div class="artist-item" onclick="showPlaylists('artist11')">
+            <img src="images//krishnahazar.jpg" alt="Krishnahazar">
+            <div class="artist-info">
+                <h2>Krishnahazar</h2>
+            </div>
+        </div>
+        
+        <div class="playlists" id="artist11-playlists">
+            <div class="playlist-item" onclick="playSong('songs/divine version.mp3', 'divine (Acoustic version)', 'Krishnahazar', 'images/divine version.jpeg')">
+                Divine(Acoustic version)
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/divine.mp3', 'Divine', 'Krishnahazar', 'images/divine.jpeg')">
+                Divine
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/mythical.mp3', 'Mythical', 'Krishnahazar', 'images/mythical.jpeg')">
+                Mythical
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/obsession.mp3', 'Obsession', 'Krishnahazar', 'images/obsession.jpeg')">
+                Obsession
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/stay awake.mp3', 'Stay awake', 'Krishnahazar', 'images/stay awake.jpeg')">
+                Stay awake
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/butterflies.mp3', 'Butterflies', 'Krishnahazar', 'images/butterflies.jpeg')">
+                Butterflies
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/all in my head.mp3', 'All in my head', 'Krishnahazar', 'images/all in my head.jpeg')">
+                All in my head
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/hurt.mp3', 'Hurt', 'Krishnahazar', 'images/hurt.jpeg')">
+                Hurt
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/someone to hold.mp3', 'Someone to hold', 'Krishnahazar', 'images/someone to hold.jpeg')">
+                Someone to hold
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/desire.mp3', 'Desire', 'Krishnahazar', 'images/desire.jpg')">
+                Desire
+            </div>
+        </div>
+
+        <div class="artist-item" onclick="showPlaylists('artist12')">
+            <img src="images//xxxtentacion.jpeg" alt="XXXTENTACION">
+            <div class="artist-info">
+                <h2>XXXTENTACION</h2>
+            </div>
+        </div>
+        
+        <div class="playlists" id="artist12-playlists">
+            <div class="playlist-item" onclick="playSong('songs/hope.mp3', 'Hope', 'XXXTENTACION', 'images/hope.jpg')">
+                Hope
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/sad.mp3', 'Bad', 'XXXTENTACION', 'images/bad.png')">
+                Sad
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/bad.mp3', 'Sad', 'XXXTENTACION', 'images/hope.jpg')">
+                Bad
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/moonlight.mp3', 'Moonlight', 'XXXTENTACION', 'images/hope.jpg')">
+                Moonlight 
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/revenge.mp3', 'Revenge', 'XXXTENTACION', 'images/hope.jpg')">
+                Revenge
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/fuxk.mp3', 'FUXK', 'XXXTENTACION', 'images/fuxk.jpg')">
+                FUXK
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/ex bitch.mp3', 'Ex bitch', 'XXXTENTACION', 'images/ex bitch.jpg')">
+                Ex bitch
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/kibg of the dead.mp3', 'King of the dead', 'XXXTENTACION', 'images/king of the dead.jpeg')">
+                King of the dead
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/changes.mp3', 'Changes', 'XXXTENTACION', 'images/hope.jpg')">
+                Changes
+            </div>
+            <div class="playlist-item" onclick="playSong('songs/true love.mp3', 'True love', 'XXXTENTACION', 'images/true love.jpeg')">
+                True love
+            </div>
+        </div>
+
+       <br><br><br><br><br><br><br><br><br><br>
+        
+        
+
+    <footer>
+        <div class="footer-song-info" id="footerSongInfo">
+            <img src="" alt="Song Image" id="footerSongImage">
+            <div>
+                <p id="footerSongTitle">Select a song to play</p>
+                <p id="footerSongArtist"></p>
+            </div>
+        </div>
+        <div class="footer-song-controls">
+            <audio controls id="footerAudio">
+                <source id="footerAudioSource" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </footer>
+
+    <script>
+
+        
+         function showPlaylists(artistId) {
+            const playlists = document.getElementById(`${artistId}-playlists`);
+            const allPlaylists = document.querySelectorAll('.playlists');
+            
+            allPlaylists.forEach(list => {
+                if (list !== playlists) {
+                    list.style.display = 'none';
+                }
+            });
+            
+            if (playlists.style.display === 'none' || playlists.style.display === '') {
+                playlists.style.display = 'block';
+            } else {
+                playlists.style.display = 'none';
+            }
+        }
+
+        function playSong(songUrl, title, artist, image) {
+            document.getElementById('footerSongTitle').textContent = title;
+            document.getElementById('footerSongArtist').textContent = artist;
+            document.getElementById('footerAudioSource').src = songUrl;
+            document.getElementById('footerAudio').load();
+            document.getElementById('footerAudio').play();
+            const songImage = document.getElementById('footerSongImage');
+            songImage.src  = image;
+            songImage.classList.add('show');
+            document.getElementById('footerSongInfo').classList.add('enlarged');
+            
+
+            document.getElementById('footerSongInfo').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

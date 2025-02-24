@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jamify-Music World</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+        header {
+            background-color: black;
+            color: white;
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            padding-top: 10px; 
+        }
+        header .logo-container{
+            display: flex;
+            align-items: center;
+        }
+        header .logo-container img{
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        header h1{
+            margin: 0;
+            font-size: 24px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #676866;
+            padding: 10px 0;
+        }
+        nav a {
+            color: #FEF3E2;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .search-bar {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            transform: translateY(0);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 300px; /* Set a fixed width for the search bar */
+            padding: 10px; /* Add some padding to the search bar */
+            border-radius: 10px; /* Add a border radius to the search bar */
+            background-color: rgba(255, 255, 255, 0.1); /* Add a background color to the search bar */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a box shadow to the search bar */
+        }
+        .search-bar input[type="text"] {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .voice-recognition {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .voice-recognition img {
+            width: 24px;
+            height: 24px;
+            border-radius: 10px;
+        }
+        .controls {
+            position: absolute;
+            bottom: -100px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            transition: all 0.5s  ease;
+        }
+        .controls.show {
+            bottom: 0;
+        }
+        .song-item {
+            background-color: #222;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .song-item:hover {
+            background-color: #333;
+        }
+
+        audio {
+            display: block;
+            margin: 20px auto;
+        }
+        .song-image {
+            position: absolute;
+            top: 60px;
+            left: -100px;
+            width: 100px;
+            height: 100px;
+            transition: all 0.5s ease;
+        }
+        .song-image.large {
+            width: 250px;
+            height: 250px;
+            left: 0;
+            top: 60px;
+        }
+        #timestamp {
+            font-size: 16px;
+            margin-top: 10px;
+            color: black;
+        }
+        .emoji-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            margin-right: 10px; /* Add some margin to the right */
+            font-size: 24px; /* Increase the font size of the emoji button */
+        }
+        .emoji-popup {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            display: none;
+            z-index: 1000;
+            width: 100px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .emoji-popup span {
+            cursor: pointer;
+            font-size: 24px;
+            margin: 5px;
+        }
+        .search-results {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            width: 200px;
+            border-radius: 5px;
+            display: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-results div {
+            padding: 5px;
+            cursor: pointer;
+        }
+        .search-results div:hover {
+            background-color: #ddd;
+        }
+        .hero {
+            background-image: url('background.png');  
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: rgb(198, 198, 201);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .hero p {
+            font-size: 24px;
+        }
+        .genres {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px 20px;
+            background-color: rgb(65, 64, 64);
+        }
+        .genre {
+            text-align: center;
+            width: 30%;
+        }
+        .genre img {
+            width: 50%;
+            border-radius: 8px;
+        }
+        .genre h2 {
+            margin: 15px 0;
+            font-size: 20px;
+        }
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            transition: all 0.5s ease;
+        }
+        .footer-song-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 20px;
+            background-color: black;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+        .footer-song-info img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            align-items: flex-start;
+            flex-direction: column;
+            transition: all 0.5s ease;
+        }
+        .footer-song-info img.large {
+            width: 250px;
+            height: 250px;
+        }
+        .footer-song-info div {
+            text-align: left;
+        }
+        .footer-song-controls {
+            background-color: black;
+            color: white;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-start;
+            margin-top: 10px;
+        }
+        #musicPopup {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            height: 0;
+            width: 100px; /* Set width for the left-side panel */
+            background-color: black;
+            transition: height 0.5s ease; /* Animate height change */
+            overflow: hidden;
+        }
+
+            /* When the music is playing, expand the height */
+        #musicPopup.active {
+            height: 100%; /* Full screen height */
+        }
+        .footer-song-controls audio {
+            width: 300px;
+        }
+        footer audio{
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+       
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('your-image-url.jpg');
+    background-size: cover; /* This makes the image cover the entire background */
+    background-position: center; /* This centers the background image */
+    color: white;
+}
+body.playing{
+    background-size: cover;
+    background-position: center;
+}
+
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>Jamify</h1>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search..." oninput="searchSongs()">
+            <button class="emoji-button" onclick="toggleEmojiPopup()">
+                😊
+            </button>
+            <div class="emoji-popup" id="emojiPopup">
+                <span onclick="filterByEmoji('happy')">😀</span>
+                <span onclick="filterByEmoji('love')">❤️</span>
+                <span onclick="filterByEmoji('sad')">😢</span>
+                <span onclick="filterByEmoji('party')">🎉</span>
+                <span onclick="filterByEmoji('chill')">😎</span>
+            </div>
+            <button class="voice-recognition" onclick="startRecognition()">
+        <img src="images//images.png" alt="Voice Recognition">
+    </button>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </header>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="discover.html">Discover</a>
+        <a href="aboutus.html">About Us</a> <!-- Link to the new page -->
+        <a href="contact.html">Contact</a>
+    </nav>
+    
+    
+    <section class="hero">
+    </section>
+    <section class="genres">
+        <div class="genre">
+            <a href="rock.html">
+                <img src="rocksongpic.png" alt="Rock Playlist">
+                <h2>Rock</h2>
+            </a>
+        </div>
+        <div class="genre">
+            <a href="pop.html">
+                <img src="popsongpic.png" alt="Pop Playlist">
+                <h2>Pop</h2>
+            </a>
+        </div>
+        <div class="genre">
+            <a href="jazz.html">
+                <img src="jazzsongpic.jpeg" alt="Jazz Playlist">
+                <h2>Jazz</h2>
+            </a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-song-info" id="footerSongInfo">
+            <img src="" alt="Song Image" id="footerSongImage">
+            <div>
+                <p id="footerSongTitle"></p>
+                <p id="footerSongArtist"></p>
+            </div>
+        </div>
+        <div class="footer-song-controls">
+            <div class="controls">
+                <button id="playPauseButton" onclick="togglePlayPause()">Play</button>
+                <p id="footerSongArtist"></p>
+            </div>
+            <audio controls id="footerAudio">
+                <source id="footerAudioSource" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </footer>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <script>
+        const searchResults = document.getElementById('searchResults');
+        const emojiPopup = document.getElementById('emojiPopup');
+        const footerSongInfo = document.getElementById('footerSongInfo');
+        const footerSongTitle = document.getElementById('footerSongTitle');
+        const footerSongArtist = document.getElementById('footerSongArtist');
+        const footerAudio = document.getElementById('footerAudio');
+        const footerAudioSource = document.getElementById('footerAudioSource');
+        const footerSongImage = document.getElementById('footerSongImage');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+
+        const songs = [
+            { title: 'delicate', artist: 'taylor swift', url: 'songs//delicate.mp3', image: 'happy.jpg', category: 'happy' },
+            { title: 'wishes', artist: 'Artist', url: 'songs//wishes.mp3', image: 'wishes.png', category: 'love' },
+            { title: 'Sad Song', artist: 'Sad Artist', url: 'sad_song.mp3', image: 'sad.jpg', category: 'sad' },
+            { title: 'Party Song', artist: 'Party Artist', url: 'party_song.mp3', image: 'party.jpg', category: 'party' },
+            { title: 'Chill Song', artist: 'Chill Artist', url: 'chill_song.mp3', image: 'chill.jpg', category: 'chill' },
+            { title: 'agora hills', artist: 'Doja cat', url: 'songs//agora hills.mp3', image: 'images//agora hills.jpg', category: 'happy' },
+            { title: 'as it was', artist: 'Harry Styles', url: 'songs//as it.mp3', image: 'images//as it was.jpeg', category: 'happy' },
+            { title: 'bad guys', artist: 'Billie Eilish', url: 'songs//bad guy.mp3', image: 'images//bad guys.jpeg', category: 'happy' },
+            { title: 'Bad Habits', artist: 'Ed sheeran', url: 'songs//Bad Habits.mp3', image: 'images//Bad Habits.jpeg', category: 'happy' },
+            { title: 'Blinding Lights', artist: 'The weekend', url: 'songs//Blinding Lights.mp3', image: 'images//Blinding Lights.jpeg', category: 'happy' },
+            { title: 'bye bye bye', artist: 'NSYNC', url: 'songs//bye bye bye.mp3', image: 'images//bye bye bye.jpeg', category: 'happy' },
+            { title: 'Chemtrails Over The Country Club', artist: 'Lana Del Rey', url: 'songs//Chemtrails Over The Country Club.mp3', image: 'images//Chemtrails Over The Country Club.jpeg', category: 'happy' },
+            { title: 'cinnamon girl', artist: 'Lana Del Rey', url: 'songs//cinnamon girl.mp3', image: 'images//cinnamon girl.png', category: 'happy' },
+            { title: 'Daylight', artist: 'David Kushner', url: 'songs//Daylight.mp3', image: 'images//Daylight.jpeg', category: 'happy' },
+            { title: 'Die For You', artist: 'The weekend', url: 'songs//Die For You.mp3', image: 'images//Die For You.jpeg', category: 'happy' },
+            { title: 'Diet Mountain Dew', artist: 'Lana Del Rey', url: 'songs//Diet Mountain Dew.mp3', image: 'images//Diet Mountain Dew.jpeg', category: 'happy' },
+            { title: 'End of Beginning', artist: 'Djo, Joe Keery', url: 'songs//End of Beginning.mp3', image: 'images//End of Beginning.jpeg', category: 'happy' },
+            { title: 'Espresso', artist: 'Sabrina Carpenter', url: 'songs//Espresso.mp3', image: 'images//Espresso.png', category: 'happy' },
+            { title: 'favourite', artist: 'Issabel larosa', url: 'songs//favourite.mp3', image: 'images//favourite.png', category: 'happy' },
+            { title: 'Happier Than Ever', artist: 'Billie Eilish', url: 'songs//Happier Than Ever.mp3', image: 'images//Happier Than Ever.jpeg', category: 'happy' },
+            { title: 'idontwannabeyouanymore', artist: 'Billie Eilish', url: 'songs//idontwannabeyouanymore.mp3', image: 'images//idontwannabeyouanymore.jpeg', category: 'happy' },
+            { title: 'in my mind', artist: 'Lyn lapit', url: 'songs//in my mind.mp3', image: 'images//in my mind.jpeg', category: 'happy' },
+            { title: 'last christmas', artist: 'WHAM', url: 'songs//last christmas.mp3', image: 'images//last christmas.jpeg', category: 'happy' },
+            { title: 'lovely', artist: 'Billie Eilish', url: 'songs//lovely.mp3', image: 'images//lovely.jpeg', category: 'happy' },
+            { title: 'lover', artist: 'taylor swift', url: 'songs//lover.mp3', image: 'images//lover.jpeg', category: 'happy' },
+            { title: 'Nothing s New', artist: 'Rio Romeo', url: 'songs//Nothing s New.mp3', image: 'images//Nothing s New.jpeg', category: 'happy' },
+            { title: 'ocean eyes', artist: 'Billie Eilish', url: 'songs//ocean eyes.mp3', image: 'images//ocean eyes.jpeg', category: 'happy' },
+            { title: 'often', artist: 'The weekend', url: 'songs//often.mp3', image: 'images//often.jpeg', category: 'happy' },
+            { title: 'One Of The Girls', artist: 'The weekend', url: 'songs//One of The Girls.mp3', image: 'images//One of The Girls.jpeg', category: 'happy' },
+            { title: 'paint the town red', artist: 'Doja cat', url: 'songs//paint the town red.mp3', image: 'images//paint the town red.jpeg', category: 'happy' },
+            { title: 'Perfect', artist: 'Ed Sheeran', url: 'songs//Perfect.mp3', image: 'images//Perfect.jpeg', category: 'happy' },
+            { title: 'photograph', artist: 'Ed sheeran', url: 'songs//photograph.mp3', image: 'images//photograph.jpeg', category: 'happy' },
+            { title: 'rewrite the stars', artist: 'James Arthur', url: 'songs//rewrite the stars.mp3', image: 'images//rewrite the stars.jpeg', category: 'happy' },
+            { title: 'ride it', artist: 'Jasean', url: 'songs//ride it.mp3', image: 'iamges//ride it.jpeg', category: 'happy' },
+            { title: 'seniorita', artist: 'Shawn Mendes', url: 'songs//seniorita.mp3', image: 'images//seniorita.jpeg', category: 'happy' },
+            { title: 'Shape of You', artist: 'Ed sheeran', url: 'songs//Shape of You.mp3', image: 'images//Shape of You.jpeg', category: 'happy' },
+            { title: 'Starboy', artist: 'The weekend', url: 'songs//Starboy.mp3', image: 'images//Starboy.jpeg', category: 'happy' },
+            { title: 'sway', artist: 'Michael Buble', url: 'songs//sway.mp3', image: 'images//sway.jpeg', category: 'happy' },
+            { title: 'There s Nothing Holdin Me Back', artist: 'Shawn Mendes', url: 'songs//There s Nothing Holdin Me Back.mp3', image: 'images//There s Nothing Holdin Me Back.jpeg', category: 'happy' },
+            { title: 'those eyes', artist: 'New west', url: 'songs//those eyes.mp3', image: 'images//those eyes.jpeg', category: 'happy' },
+            { title: 'treat you better', artist: 'Shawn Mendes', url: 'songs//treat you better.mp3', image: 'iamges//treat you better.jpeg', category: 'happy' },
+            { title: 'alag aasman', artist: 'Anuv jain', url: 'songs//alag aasmaan.mp3', image: 'iamges//alag aasmaan.jpeg', category: 'happy' },
+            { title: 'all i need', artist: 'Prateek kuhad', url: 'songs//alag aasmaan.mp3', image: 'iamges//alag aasmaan.jpeg', category: 'happy' },
+            { title: 'all i my head ', artist: 'Krishnahazar', url: 'songs//all in my need.mp3', image: 'iamges//all in my head.jpeg', category: 'happy' },
+            { title: 'baarishein', artist: 'Anuv jain', url: 'songs//baarishein.mp3', image: 'iamges//baarishein.jpeg', category: 'happy' },
+            { title: 'bad', artist: 'XXXTENTACION', url: 'songs//bad.mp3', image: 'iamges//bad.jpeg', category: 'happy' },
+            { title: 'blue', artist: 'BLUE', url: 'songs//blue.mp3', image: 'iamges//blue.jpeg', category: 'happy' },
+            { title: 'brroklyn baby', artist: 'Lana del ray', url: 'songs//brooklyn baby.mp3', image: 'iamges//brroklyn baby.jpeg', category: 'happy' },
+            { title: 'burn', artist: 'Kanye west', url: 'songs//burn.mp3', image: 'iamges//burn.jpeg', category: 'happy' },
+            { title: 'butterflies', artist: 'Krishnahazar', url: 'songs//butterflies.mp3', image: 'iamges//butterflies.jpeg', category: 'happy' },
+            { title: 'butterfly effect', artist: 'Travis scott', url: 'songs//butterfly effect.mp3', image: 'iamges//butterfly effect.jpeg', category: 'happy' },
+            { title: 'carnival', artist: 'Kanye west', url: 'songs//carnival.mp3', image: 'iamges//carnival.jpeg', category: 'happy' },
+            { title: 'changes', artist: 'XXXTENTACION', url: 'songs//changes.mp3', image: 'iamges//changes.jpeg', category: 'happy' },
+            { title: 'cindrella', artist: 'Travis scott', url: 'songs//cindrella.mp3', image: 'iamges//cinderlla.jpeg', category: 'happy' },
+            { title: 'co2', artist: 'Prateek kuhad', url: 'songs//co2.mp3', image: 'iamges//co2.jpeg', category: 'happy' },
+            { title: 'desire', artist: 'Krishnahazar', url: 'songs//desire.mp3', image: 'iamges//desire.jpeg', category: 'happy' },
+            { title: 'divine', artist: 'Krishnahazar', url: 'songs//divine.mp3', image: 'iamges//divine.jpeg', category: 'happy' },
+            { title: 'ex bitch', artist: 'XXXTENTACION', url: 'songs//ex bitch.mp3', image: 'iamges//ex bitch.jpeg', category: 'happy' },
+            { title: 'fein', artist: 'Travis scott', url: 'songs//fein.mp3', image: 'iamges//my eyes.jpeg', category: 'happy' },
+            { title: 'field trip', artist: 'Kanye west', url: 'songs//field trip.mp3', image: 'iamges//burn.jpeg', category: 'happy' },
+            { title: 'Father strech my hands', artist: 'Kanye west', url: 'songs//FSMH.mp3', image: 'iamges//FSMH.jpeg', category: 'happy' },
+            { title: 'fuxk', artist: 'XXXTENTACION', url: 'songs//fuxk.mp3', image: 'iamges//fuxk.jpeg', category: 'happy' },
+            { title: 'gold digger', artist: 'Kanye west', url: 'songs//gold digger.mp3', image: 'iamges//gold digger.jpeg', category: 'happy' },
+            { title: 'golden hour', artist: 'JVKE', url: 'songs//golden bour.mp3', image: 'iamges//golden hour.jpeg', category: 'happy' },
+            { title: 'goosebumps', artist: 'Travis scott', url: 'songs//goosebumps.mp3', image: 'iamges//goosebumps.jpeg', category: 'happy' },
+            { title: 'gul', artist: 'Anuv jain', url: 'songs//gul.mp3', image: 'iamges//gul.jpeg', category: 'happy' },
+            { title: 'heartless', artist: 'Kanye west', url: 'songs//heartless.mp3', image: 'iamges//heartless.jpeg', category: 'happy' },
+            { title: 'highest in the room', artist: 'Travis scott', url: 'songs//highest in the room.mp3', image: 'iamges//highest in the room.jpeg', category: 'happy' },
+            { title: 'husn', artist: 'Anuv jain', url: 'songs//husn.mp3', image: 'iamges//husn.jpeg', category: 'happy' },
+            { title: 'hyena', artist: 'Travis scott', url: 'songs//hyena.mp3', image: 'iamges//my eyes.jpeg', category: 'happy' },
+            { title: 'i know', artist: 'Travis scott', url: 'songs//i know.mp3', image: 'iamges//my eyes.jpeg', category: 'happy' },
+            { title: 'kasam', artist: 'Prateek kuhad', url: 'songs//kadam.mp3', image: 'iamges//kadam.jpeg', category: 'happy' },
+            { title: 'kassor', artist: 'Prateek kuhad', url: 'songs//kasoor.mp3', image: 'iamges//kasoor.jpeg', category: 'happy' },
+            { title: 'kho gaye hum kaha', artist: 'XXXTENTACION', url: 'songs//kho gaye hum kaha.mp3', image: 'iamges//kho gaye hum kaha.jpeg', category: 'happy' },
+            { title: 'mazaak', artist: 'Anuv jain', url: 'songs//mazaak.mp3', image: 'iamges//mazaak.jpeg', category: 'happy' },
+            { title: 'my eyes', artist: 'Travis scott', url: 'songs//my eyes.mp3', image: 'iamges//my eyes.jpeg', category: 'happy' },
+            { title: 'mythical', artist: 'Krishnahazar', url: 'songs//mythical.mp3', image: 'iamges//mythical.jpeg', category: 'happy' },
+            { title: 'obsession', artist: 'Krishnahazar', url: 'songs//obsession.mp3', image: 'iamges//obsession.jpeg', category: 'happy' },
+            { title: 'remainder', artist: 'The weekend', url: 'songs//reminder.mp3', image: 'iamges//Starboy.jpeg', category: 'happy' },
+            { title: 'river', artist: 'Kanye west', url: 'songs//river.mp3', image: 'iamges//burn.jpeg', category: 'happy' },
+            { title: 'sdp interlude', artist: 'Travis scott', url: 'songs//sdp interlude.mp3', image: 'iamges//goosebumps.jpeg', category: 'happy' },
+            { title: 'sicko mode', artist: 'Travis scott', url: 'songs//sicko mode.mp3', image: 'iamges//sicko mode.jpeg', category: 'happy' },
+            { title: 'slide', artist: 'Kanye west', url: 'songs//slide.mp3', image: 'iamges//burn.jpeg', category: 'happy' },
+            { title: 'space cadet', artist: 'Metro boomin', url: 'songs//space cadet.mp3', image: 'iamges//space cadet.jpeg', category: 'happy' },
+            { title: 'superhero', artist: 'Metro boomin', url: 'songs//superhero.mp3', image: 'iamges//trance.jpeg', category: 'happy' },
+        ];
+
+        function searchSongs() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            searchResults.innerHTML = '';
+            const results = songs.filter(song => song.title.toLowerCase().includes(query) || song.artist.toLowerCase().includes(query));
+            if (results.length > 0) {
+                searchResults.style.display = 'block';
+                results.forEach(song => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.textContent = `${song.title} - ${song.artist}`;
+                    resultDiv.onclick = () => playSong(song);
+                    searchResults.appendChild(resultDiv);
+                });
+            } else {
+                searchResults.style.display = 'none';
+            }
+        }
+
+        let isPlaying = false;
+
+        function playSong(song) {
+            footerSongTitle.textContent = song.title;
+            footerSongArtist.textContent = song.artist;
+            footerAudioSource.src = song.url;
+            footerAudio.load();
+            footerAudio.play();
+            footerSongImage.src = song.image;
+            footerSongImage.classList.add('large'); // Enlarge the image
+            document.body.style.backgroundImage = `url(${song.image})`; // Set the background to the song image
+            document.body.classList.add('playing'); // Add a class for further styling if needed
+            searchResults.style.display = 'none';
+            isPlaying = true;
+            updateTimestamp();
+            document.getElementById('playPauseButton').textContent = 'Pause';
+            document.querySelector('.controls').classList.add('show');
+            document.getElementById('playButton').addEventListener('click', playMusic);
+            document.getElementById('stopButton').addEventListener('click', stopMusic);
+        }
+
+        function playMusic() {
+                // Toggle the 'active' class to make the pop-up expand vertically
+            const musicPopup = document.getElementById('musicPopup');
+            musicPopup.classList.add('active');
+        }
+
+            // Simulating music stop event
+        function stopMusic() {
+            // Remove the 'active' class to hide the pop-up
+            const musicPopup = document.getElementById('musicPopup');
+            musicPopup.classList.remove('active');
+        }
+
+        function updateTimestamp() {
+            if (isPlaying) {
+                const timestamp = document.getElementById('timestamp');
+                const currentTime = footerAudio.currentTime;
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = Math.floor(currentTime % 60);
+                timestamp.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                setTimeout(updateTimestamp, 1000);
+            }
+        }
+
+        function toggleEmojiPopup() {
+            emojiPopup.style.display = emojiPopup.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function togglePlayPause() {
+            if (isPlaying) {
+                footerAudio.pause();
+                isPlaying = false;
+                document.getElementById('playPauseButton').textContent = 'Play';
+            } else {
+                footerAudio.play();
+                isPlaying = true;
+                updateTimestamp();
+                document.getElementById('playPauseButton').textContent = 'Pause';
+            }
+}
+
+        function filterByEmoji(category) {
+            searchResults.innerHTML = '';
+            const results = songs.filter(song => song.category === category);
+            if (results.length > 0) {
+                searchResults.style.display = 'block';
+                results.forEach(song => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.textContent = `${song.title} - ${song.artist}`;
+                    resultDiv.onclick = () => playSong(song);
+                    searchResults.appendChild(resultDiv);
+                });
+            } else {
+                searchResults.style.display = 'none';
+            }
+        }
+
+        
+
+        function startRecognition() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert('Your browser does not support speech recognition.');
+        return;
+    }
+
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = function() {
+        console.log('Voice recognition started.');
+    };
+
+    recognition.onresult = function(event) {
+        let result = event.results[0][0].transcript;
+        result = result.replace(/[.,!?;:]/g, '').trim();  // Remove punctuation marks
+        document.getElementById('searchInput').value = result;
+        searchSongs();
+    };
+
+    recognition.onerror = function(event) {
+        console.error('Voice recognition error', event.error);
+    };
+
+    recognition.onend = function() {
+        console.log('Voice recognition ended.');
+    };
+
+    recognition.start();
+}
+
+    </script>
+</body>
+</html>
